@@ -13,7 +13,7 @@ if ($_GET[type][0] != "") {
 global $oldFormName, $newFormName, $optionValue, $fieldName, $dataID;
 
 $oldFormName = "property_listing";              // Name of the old form (used on sites before master forms update)
-$newFormName = "property_fields_bootstrap";     // Name of new master form
+$newFormName = "property_listing";                // Name of new master form
 $fieldName = "property_type";                   // Name of the field of the select
 $dataID = 12;                                   // ID of the feature
 
@@ -70,12 +70,12 @@ echo widget("Bootstrap Theme - Function - Post Category Dropdown Controller","",
             </select>
         </div>
         <div class="form-group">
-            <select name="product_category" id="bedrooms" class="selectpicker">
-                <option value="" selected><?php echo $Label[product_type]?></option>
+            <select name="Modules" id="modules" class="selectpicker">
+                <option value="" selected><?php echo $Label[Modules]?></option>
                 <option value="0">0+</option>
                 <?php
                 for ($value = 1; $value <= 21; $value++) {
-                    echo '<option value="' . $value . '" ' . (($_GET['product_type'] == $value) ? 'selected="selected"' : "") . '>' . $value . '+</option>';
+                    echo '<option value="' . $value . '" ' . (($_GET['Modules'] == $value) ? 'selected="selected"' : "") . '>' . $value . '+</option>';
                 }
                 ?>
             </select>
