@@ -1,0 +1,102 @@
+<?php
+if ($_GET[type][0] != "") {
+    $arr = $_GET;
+    $myType;
+    foreach ($arr as $row => $value) {
+        foreach ($value as $row2 => $value2)
+            $myType .= $value2 . "|";
+    }
+    $myType = rtrim($myType, "|");
+    $myType = explode('|', $myType);
+}
+
+global $oldFormName, $newFormName, $optionValue, $fieldName, $dataID;
+
+$oldFormName = "property_listing";              // Name of the old form (used on sites before master forms update)
+$newFormName = "property_fields_bootstrap";     // Name of new master form
+$fieldName = "property_type";                   // Name of the field of the select
+$dataID = 12;                                   // ID of the feature
+
+echo widget("Bootstrap Theme - Function - Post Category Dropdown Controller","",$w[website_id],$w);
+?>
+<link href="/directory/cdn/assets/bootstrap/css/bootstrap-select.min.css" rel="stylesheet">
+
+<div class="module">
+    <h3>%%%search_dc_h1%%%</h3>
+
+    <form class="form website-search" action="/<?php echo $dc[data_filename]; ?>" method="get">
+        <div class="input-group md-autosuggest bmargin">
+            <span class="input-group-addon"><i class="fa fa-search"></i></span>
+            <input type="text" class="form-control md-autosuggest-input property_search" id="keyword" placeholder="%%%home_search_keyword%%%" name="q"
+                   value="<?php echo stripslashes($_GET[q]);?>">
+        </div>
+        <div class="form-group">
+            <select name="property_status" id="property_status" class="selectpicker">
+                <option value="" <?php if ($_GET['property_status'] == "") {
+                    echo 'selected="selected"';
+                }?>>%%%property_all_statuses%%%
+                </option>
+                <option value="For Sale" <?php if ($_GET['property_status'] == "For Sale") {
+                    echo 'selected="selected"';
+                }?>>%%%property_search_sale%%%
+                </option>
+                <option value="For Rent" <?php if ($_GET['property_status'] == "For Rent") {
+                    echo 'selected="selected"';
+                }?>>%%%property_search_rent%%%
+                </option>
+            </select>
+        </div>
+        <div class="form-group">
+            <select name="type[]" multiple data-selected-text-format="count>2" id="type_property" class="selectpicker"
+                    title='<?php echo $Label[search_property_type]?>'>
+                <?php
+                foreach ($optionValue as $key) {
+                    if (preg_match('/=>/', $key)) {
+                        $key = explode('=>', $key);
+                        if ($key[0] != '') {
+                            if (in_array($key[0], $myType))
+                                echo '<option value="' . $key[0] . '" selected >' . $key[1] . '</option>';
+                            else
+                                echo '<option value="' . $key[0] . '">' . $key[1] . '</option>';
+                        }//end if key[0] is empty
+                    } else {
+                        if (in_array($key, $myType))
+                            echo '<option value="' . $key . '" selected >' . $key . '</option>';
+                        else
+                            echo '<option value="' . $key . '">' . $key . '</option>';
+                    }//end of the else from eh if pregmatch
+                }// end of the for each
+                ?>
+            </select>
+        </div>
+        <div class="form-group">
+            <select name="product_category" id="bedrooms" class="selectpicker">
+                <option value="" selected><?php echo $Label[product_type]?></option>
+                <option value="0">0+</option>
+                <?php
+                for ($value = 1; $value <= 21; $value++) {
+                    echo '<option value="' . $value . '" ' . (($_GET['product_type'] == $value) ? 'selected="selected"' : "") . '>' . $value . '+</option>';
+                }
+                ?>
+            </select>
+        </div>
+        <div class="form-group">
+            <select name="bathrooms" id="bathrooms" class="selectpicker">
+                <option value="" selected><?php echo $Label[property_search_bathrooms]?></option>
+                <option value="0">0+</option>
+                <?php
+                for ($value = 1; $value <= 21; $value++) {
+                    echo '<option value="' . $value . '" ' . (($_GET['bathrooms'] == $value) ? 'selected="selected"' : "") . '>' . $value . '+</option>';
+                }
+                ?>
+            </select>
+        </div>
+        <div class="form-group hpad" title="<?php echo $Label[home_search_pricerange]?>">
+            <div id="property_slider"></div>
+            <input type="hidden" name="price">
+        </div>
+        <div class="form-group nobmargin">
+            <button type="submit" class="btn btn-primary btn-block">%%%sidebar_module_search%%%</button>
+        </div>
+    </form>
+</div>
