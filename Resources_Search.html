@@ -1,0 +1,46 @@
+<?php
+if ($_GET[type][0] != "") {
+    $arr = $_GET;
+    $myType;
+    foreach ($arr as $row => $value) {
+        foreach ($value as $row2 => $value2)
+            $myType .= $value2 . "|";
+    }
+    $myType = rtrim($myType, "|");
+    $myType = explode('|', $myType);
+}
+?>
+<link href="/directory/cdn/assets/bootstrap/css/bootstrap-select.min.css" rel="stylesheet">
+<div class="module">
+    <h3>Search Resources</h3>
+
+    <form class="form website-search" action="/resources" method="get">
+      <div class="form-group">
+          <select name="product_type[]" multiple data-selected-text-format="count>2" id="product_type" class="selectpicker" title='Resource Types'>
+              <option value="">All Resource Types</option>
+              <?php
+                  $options = mysql($w[database], "SELECT field_options FROM `form_fields` WHERE form_name = 'property_listing' AND field_name = 'kit_section'");
+                  $formOptions = mysql_fetch_array($options);
+                  $formOptions[0] = ltrim($formOptions[0], ',');
+                  $optionValue = explode(',', $formOptions[0]);
+                  foreach ($optionValue as $key) {
+                      if (preg_match('/=>/',$key)) {
+                          $key = explode('=>', $key);
+                          echo '<option value="' . trim($key[0]) . '">' . trim($key[1]) . '</option>';
+                      } else
+                        echo '<option value="' . trim($key) . '">' . $key . '</option>';
+                    }
+                ?>
+          </select>
+      </div>
+
+        <div class="input-group md-autosuggest bmargin col-sm-12">
+            <span class="input-group-addon"><i class="fa fa-search"></i></span>
+            <input type="text" class="form-control md-autosuggest-input products_search" id="keyword" placeholder="Search Resources" name="q" value="<?php echo stripslashes($_GET['q']);?>">
+        </div>
+
+        <div class="form-group nobmargin">
+            <button type="submit" class="btn btn-primary btn-block">%%%home_search_submit%%%</button>
+        </div>
+    </form>
+</div>
