@@ -15,8 +15,44 @@ if ($_GET[type][0] != "") {
     <h3>Search Resources</h3>
 
     <form class="form website-search" action="/resources" method="get">
-      <div class="form-group">
-          <select name="product_type[]" multiple data-selected-text-format="count>2" id="product_type" class="selectpicker" title='Resource Types'>
+        <div class="form-group">
+
+            <select name="kit_section" id="kit_section" class="selectpicker">
+                <option value="" <?php if ($_GET['kit_section'] == "") {
+                    echo 'selected="selected"';
+                }?>>All Resource Types
+                </option>
+                <option value="Explore" <?php if ($_GET['kit_section'] == "Explore") {
+                    echo 'selected="selected"';
+                }?>>Explore
+                </option>
+                <option value="Prepare-Team" <?php if ($_GET['kit_section'] == "Prepare-Team") {
+                    echo 'selected="selected"';
+                }?>>Prepare-Team
+                </option>
+                <option value="Prepare-Plan" <?php if ($_GET['kit_section'] == "Prepare-Plan") {
+                    echo 'selected="selected"';
+                }?>>Prepare-Plan
+                </option>
+                <option value="Prepare-Technology" <?php if ($_GET['kit_section'] == "Prepare-Technology") {
+                    echo 'selected="selected"';
+                }?>>Prepare-Technology
+                </option>
+                <option value="Campaign" <?php if ($_GET['kit_section'] == "Campaign") {
+
+                    echo 'selected="selected"';
+
+                }?>>Campaign
+
+                </option>
+                <option value="External" <?php if ($_GET['kit_section'] == "External") {
+
+                    echo 'selected="selected"';
+
+                }?>>External
+            </select>
+        </div>
+          <!-- <select name="product_type[]" multiple data-selected-text-format="count>2" id="product_type" class="selectpicker" title='Resource Types'>
               <option value="">All Resource Types</option>
               <?php
                   $options = mysql($w[database], "SELECT field_options FROM `form_fields` WHERE form_name = 'property_listing' AND field_name = 'kit_section'");
@@ -26,13 +62,12 @@ if ($_GET[type][0] != "") {
                   foreach ($optionValue as $key) {
                       if (preg_match('/=>/',$key)) {
                           $key = explode('=>', $key);
-                          echo '<option value="' . trim($key[0]) . '">' . trim($key[1]) . '</option>';
+                          echo '<option name='input' value="' . trim($key[0]) . '">' . trim($key[1]) '</option>';
                       } else
                         echo '<option value="' . trim($key) . '">' . $key . '</option>';
                     }
                 ?>
-          </select>
-      </div>
+          </select> -->
 
         <div class="input-group md-autosuggest bmargin col-sm-12">
             <span class="input-group-addon"><i class="fa fa-search"></i></span>
